@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 
 
-export const EmployeeList = () => {
-    const [employees, changeEmployee] = useState([])
+export const CustomerList = () => {
+    const [customers, changeCustomer] = useState([])
     //const [employeeSpecialties, setSpecialty] = useState([])
     const history = useHistory()
 
     useEffect(
         () => {
-            fetch("http://localhost:8088/employees?_expand=location")
+            fetch("http://localhost:8088/customers")
                 .then(res => res.json())
                 .then((data) => {
-                    changeEmployee(data)
+                    changeCustomer(data)
                 })
         },
         []
@@ -30,13 +30,13 @@ export const EmployeeList = () => {
 
     return (
         <>
-            <button onClick={() => history.push("/employees/create")}>Hire Employee</button>
+            <button onClick={() => history.push("/customers")}>Customer</button>
 
             
             {
-                employees.map(
-                    (employee) => {
-                        return <p key={`employee--${employee.id}`}>{employee.name} works at our {employee.location.city} location.</p>
+                customers.map(
+                    (customer) => {
+                        return <p key={`customer--${customer.id}`}>{customer.name}</p>
                     }
                 )
             }
