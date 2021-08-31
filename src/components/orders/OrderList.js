@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 
 export const OrderList = () => {
     const [purchases, getPurchases] = useState([])
+    const [total, updatePurchases] = useState("")
     const { customerId }  = useParams()
     
     useEffect( () => {
@@ -12,6 +13,11 @@ export const OrderList = () => {
                 getPurchases(data)
             })
     }, [ customerId ])
+
+    useEffect(() => {
+        const totalPurchases = purchases.filter(purchase => purchase.id !== 0).length
+        updatePurchases(totalPurchases)
+    }, [purchases] )
 
     return (
         <>
@@ -24,6 +30,9 @@ export const OrderList = () => {
                     }
                 )
             }
+
+<div>You have {total} items in your cart.</div>
+
             
         </>
     )

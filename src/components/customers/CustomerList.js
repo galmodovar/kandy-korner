@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
-import { getAllCustomers } from "../ApiManager"
+import { getAllCustomers, getAllPurchases } from "../ApiManager"
 
 
 export const CustomerList = () => {
     const [customers, changeCustomer] = useState([])
-    //const [employeeSpecialties, setSpecialty] = useState([])
+    const [purchases, changePurchase] = useState([])
+    const [customerPurchases, setPurchases] = useState([])
     const history = useHistory()
 
     useEffect(
@@ -17,28 +18,46 @@ export const CustomerList = () => {
         },
         []
     )
-    // useEffect(() => {
-    //     const specialties = employees.map(employee => employee.specialty )
-    //     setSpecialty(specialties.join(","))
-    //     /*
-    //         1. Use .map() to get the specialty of each employee
-    //         2. Then update a state variable to be a comma-separated string
-    //             (e.g. "iPhone, Printers, ...")
-    //     */
-    // }, [employees])
+
+    useEffect(
+        () => {
+            getAllPurchases()
+                .then((data) => {
+                    changePurchase(data)
+                })
+        },
+        []
+    )
+
+    useEffect(() => {
+        const totalPurchases = customers.map(customer => {
+            purchases.filter(purchase => purchase.customerId === customer.id).length
+            customer.total = totalPurchases
+            
+            return customer 
+        }) 
+        setPurchases(totalPurchases)
+    }, [purchases] )
 
     return (
         <>
-            <button onClick={() => history.push("/customers")}>Customer</button>
 
             
             {
                 customers.map(
                     (customer) => {
-                        return <p key={`customer--${customer.id}`}>{customer.name}</p>
-                    }
-                )
+                                return <p key={`customer--${customer.id}`}>{customer.name} {customerPurchases}</p>
+                                
+                           
+                    })
+
+                
+            
             }
-        </>
+                          
+                
+          </>
+
+            
     )
 }
