@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { getAllLocations } from "../ApiManager"
 
 export const LocationList = () => {
     const [locations, updateLocations] = useState([])
@@ -6,8 +7,7 @@ export const LocationList = () => {
 
     useEffect(
         () => {
-            fetch("http://localhost:8088/locations")
-                .then(res => res.json())
+            getAllLocations()
                 .then((data) => {
                     updateLocations(data)
                 })
@@ -15,18 +15,6 @@ export const LocationList = () => {
         []
     )
 
-    // useEffect(
-    //     () => {
-    //         if (customers.length === 1) {
-    //             updateMessage("You have 1 customer")
-    //         }
-    //         else {
-    //             updateMessage(`You have ${customers.length} customers`)
-    //         }
-
-    //     },
-    //     [customers]
-    //)
 
     return (
         <>

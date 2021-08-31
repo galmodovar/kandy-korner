@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { getAllProducts } from "../ApiManager"
 
 export const ProductList = () => {
     const [products, updateProducts] = useState([])
@@ -6,8 +7,7 @@ export const ProductList = () => {
 
     useEffect(
         () => {
-            fetch("http://localhost:8088/products?_expand=productType&_sort=productTypeId")
-                .then(res => res.json())
+            getAllProducts()
                 .then((data) => {
                     updateProducts(data)
                 })
@@ -32,7 +32,6 @@ export const ProductList = () => {
         return fetch(`http://localhost:8088/purchases`, fetchOption)
        
     }
-
 
     return (
         <>

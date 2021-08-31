@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
+import { getAllCustomers } from "../ApiManager"
 
 
 export const CustomerList = () => {
@@ -9,15 +10,13 @@ export const CustomerList = () => {
 
     useEffect(
         () => {
-            fetch("http://localhost:8088/customers")
-                .then(res => res.json())
+            getAllCustomers()
                 .then((data) => {
                     changeCustomer(data)
                 })
         },
         []
     )
-
     // useEffect(() => {
     //     const specialties = employees.map(employee => employee.specialty )
     //     setSpecialty(specialties.join(","))

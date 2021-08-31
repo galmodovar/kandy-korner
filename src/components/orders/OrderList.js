@@ -13,8 +13,6 @@ export const OrderList = () => {
             })
     }, [ customerId ])
 
-    
-
     return (
         <>
             <h2>Shopping Cart</h2>
