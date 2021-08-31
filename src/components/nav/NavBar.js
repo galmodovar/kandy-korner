@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import "./NavBar.css"
+const currentUser = localStorage.getItem("kandy_customer")
 
 export const NavBar = (props) => {
     return (
@@ -16,6 +17,9 @@ export const NavBar = (props) => {
             </li>
             <li className="navbar__item active">
                 <Link className="navbar__link" to="/employees">Employees</Link>
+            </li>
+            <li className="navbar__item active">
+                <Link className="navbar__link" to={`/orders/${currentUser}`}>My Orders</Link>
             </li>
             <li className="navbar__item active">
                 <Link className="navbar__link" to="" onClick={

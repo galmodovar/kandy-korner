@@ -15,25 +15,35 @@ export const ProductList = () => {
         []
     )
 
-    // useEffect(
-    //     () => {
-    //         if (customers.length === 1) {
-    //             updateMessage("You have 1 customer")
-    //         }
-    //         else {
-    //             updateMessage(`You have ${customers.length} customers`)
-    //         }
+    const purchase = (id) => {
+        const newPurchase = {
+            customerId: parseInt(localStorage.getItem("kandy_customer")),
+            productId: id,
+        
+        }
 
-    //     },
-    //     [customers]
-    //)
+        const fetchOption = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newPurchase)
+        }
+        return fetch(`http://localhost:8088/purchases`, fetchOption)
+       
+    }
+
 
     return (
         <>
             {
                 products.map(
                     (productObject) => {
-                        return <p key={`product--${productObject.id}`}>{productObject.name} {productObject.productType.name}</p>
+                        return <p key={`product--${productObject.id}`} value={productObject.id}>
+                            {productObject.name} {productObject.productType.name}
+                            <button onClick={() => {purchase(productObject.id)}}>Purchase</button>
+
+                                </p>
                     }
                 )
             }

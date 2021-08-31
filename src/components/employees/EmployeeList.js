@@ -18,15 +18,19 @@ export const EmployeeList = () => {
         []
     )
 
-    // useEffect(() => {
-    //     const specialties = employees.map(employee => employee.specialty )
-    //     setSpecialty(specialties.join(","))
-    //     /*
-    //         1. Use .map() to get the specialty of each employee
-    //         2. Then update a state variable to be a comma-separated string
-    //             (e.g. "iPhone, Printers, ...")
-    //     */
-    // }, [employees])
+    const fireEmployee = (id) => {
+        fetch(`http://localhost:8088/employees/${id}`, {
+            method: "DELETE"
+        })
+        .then(() => {
+            fetch("http://localhost:8088/employees?_expand=location")
+            .then(res => res.json())
+            .then((data) => {
+                changeEmployee(data)
+            })
+            }
+        )
+    }
 
     return (
         <>
@@ -36,7 +40,8 @@ export const EmployeeList = () => {
             {
                 employees.map(
                     (employee) => {
-                        return <p key={`employee--${employee.id}`}>{employee.name} works at our {employee.location.city} location.</p>
+                        return <p key={`employee--${employee.id}`}>{employee.name} works at our {employee.location.city} location.
+                                    <button onClick={() => {fireEmployee(employee.id)}}>Let Go</button></p>
                     }
                 )
             }
