@@ -31,7 +31,7 @@ export const OrderList = () => {
                 )
             }
 
-<div>You have {total} items in your cart.</div>
+            <h3>You have {total} items in your cart.</h3>
 
             
         </>

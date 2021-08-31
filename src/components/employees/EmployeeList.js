@@ -36,7 +36,6 @@ export const EmployeeList = () => {
         <>
             <button onClick={() => history.push("/employees/create")}>Hire Employee</button>
 
-            
             {
                 employees.map(
                     (employee) => {
