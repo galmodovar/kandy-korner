@@ -34,7 +34,9 @@ export const CustomerList = () => {
             customer.total = purchases.filter(purchase => purchase.customerId === customer.id).length
             return customer 
         })
-        setPurchases(totalPurchases)
+        setPurchases(totalPurchases.sort((a, b) => {
+            return b.total - a.total
+        }))
     }, [purchases] )
 
     return (
