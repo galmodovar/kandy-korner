@@ -50,10 +50,9 @@ export const CustomerList = () => {
                 customers.map(
                     (customer) => {
                         customer.total = purchases.filter(purchase =>  purchase.customerId === customer.id).length
-                                if (customer.total !== 0) {
+                        customers.sort((a, b) => {return b.total - a.total})
+                                 {
                                     return <p key={`customer--${customer.id}`}>{customer.name} has purchased {customer.total} items</p>
-                                } else {
-                                    return <p key={`customer--${customer.id}`}>{customer.name} has not made a purchase </p>
                                 } 
                             }
                         )
@@ -71,6 +70,3 @@ export const CustomerList = () => {
             
     )
 }
-
-
-
