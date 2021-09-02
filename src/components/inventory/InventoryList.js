@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { getAllProducts } from "../ApiManager"
 
 export const InventoryList = ({someAttributeList}) => {
-    const [searchTerm, updateSearch] = useState({})
+    const [searchResults, updateSearchResults] = useState({})
     const [products, updateProducts] = useState([])
 
     useEffect(
@@ -12,17 +12,18 @@ export const InventoryList = ({someAttributeList}) => {
                     updateProducts(data)
                 })
         },
-        [searchTerm]
+        []
     )
 
     useEffect(
         () => {
             
-            const product = products.find(product => product.name.Startswith(searchTerm))   
+            const product = products.find(product => product.name.startsWith(someAttributeList))   
                          if (product !== undefined) {
-                             return product
-                         }
-                        updateSearch(product)
+                             updateSearchResults(product)
+                            }
+
+                            
         },
         [someAttributeList]
     )
@@ -31,7 +32,8 @@ export const InventoryList = ({someAttributeList}) => {
     return (
         <>
            <h2>Inventory List</h2>
-           {searchTerm?.name}
+           {searchResults?.name}
         </>
     )
 }
+
