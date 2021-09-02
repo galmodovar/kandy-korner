@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 export const OrderList = () => {
     const [purchases, getPurchases] = useState([])
     const [total, updatePurchases] = useState("")
+    const [totalPurchases, setPurchases] = useState(new Map())
     const { customerId }  = useParams()
     
     useEffect( () => {
@@ -19,14 +20,40 @@ export const OrderList = () => {
         updatePurchases(totalPurchases)
     }, [purchases] )
 
+
+    const createLineItem = () => {
+        const customerPurchases = new Map()
+        for (const purchase of purchases) {
+            if (customerPurchases.has(purchase.productId)) {
+                    customerPurchases.get(purchase.productId).total++
+                    
+            } else {
+                    customerPurchases.set(purchase.productId, {total: 1, price: purchase.product.price, name: purchase.product.name})
+            }
+        }
+        return customerPurchases
+    }
+
+    useEffect(() => {
+        const purchaseList = createLineItem()
+        setPurchases(purchaseList)
+    }, [purchases] )
+
+
+
+
+
+
+
     return (
         <>
             <h2>Shopping Cart</h2>
 
             {
-                purchases.map(
-                    (purchase) => {
-                        return <p key={`purchase--${purchase.id}`}>{purchase.product.name} {purchase.product.price}</p>
+                Array.from(totalPurchases).map(
+                    
+                    ([key, value]) => {
+                        return <p key={`purchase--${key}`}>{value.name} {value.price} {value.total} </p>
                     }
                 )
             }
