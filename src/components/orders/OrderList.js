@@ -90,7 +90,7 @@ export const OrderList = () => {
                     
                     ([key, value]) => {
                        
-                        return <p key={`purchase--${value.total}`}>{value.name} {value.name} {value.total} </p>
+                        return <p key={`purchase--${key}`}>{value.name} {value.name} {value.total} </p>
                     }
                 )
             }
