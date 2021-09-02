@@ -26,6 +26,7 @@ export const OrderList = () => {
         for (const purchase of purchases) {
             if (customerPurchases.has(purchase.productId)) {
                     customerPurchases.get(purchase.productId).total++
+                    customerPurchases.get(purchase.productId).price += customerPurchases.get(purchase.productId).total
                     
             } else {
                     customerPurchases.set(purchase.productId, {total: 1, price: purchase.product.price, name: purchase.product.name})
