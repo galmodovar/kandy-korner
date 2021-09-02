@@ -1,9 +1,9 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import "./NavBar.css"
-const currentUser = localStorage.getItem("kandy_customer")
 
-export const NavBar = (props) => {
+export const NavBar = () => {
+    const currentUser = localStorage.getItem("kandy_customer")
     return (
         <ul className="navbar">
             <li className="navbar__item active">
