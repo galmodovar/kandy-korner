@@ -6,6 +6,8 @@ import { EmployeeList } from "./employees/EmployeeList"
 import { EmployeeForm } from "./employees/EmployeeForm"
 import { CustomerList } from "./customers/CustomerList"
 import { OrderList } from "./orders/OrderList"
+import { InventorySearch } from "./inventory/InventorySearch"
+import { InventoryList } from "./inventory/InventoryList"
 
 
 
@@ -31,8 +33,14 @@ export const ApplicationViews = () => {
             <Route exact path="/employees/create">
                 <EmployeeForm />
             </Route>
+
             <Route exact path="/customers">
                 <CustomerList />
+            </Route>
+
+            <Route exact path="/inventory">
+                <InventorySearch />
+                <InventoryList />
             </Route>
         </>
     )
