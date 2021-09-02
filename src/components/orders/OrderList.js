@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom'
 export const OrderList = () => {
     const [purchases, getPurchases] = useState([])
     const [total, updatePurchases] = useState("")
-    const [totalPurchases, setPurchases] = useState(new Map())
+    //const [totalPurchases, setPurchases] = useState(new Map())
+    const [totalPurchases, setPurchases] = useState([])
     const { customerId }  = useParams()
     
     useEffect( () => {
@@ -21,23 +22,58 @@ export const OrderList = () => {
     }, [purchases] )
 
 
-    const createLineItem = () => {
-        const customerPurchases = new Map()
-        for (const purchase of purchases) {
-            if (customerPurchases.has(purchase.productId)) {
-                    customerPurchases.get(purchase.productId).total++
+    // const createLineItem = () => {
+    //     const customerPurchases = new Map()
+    //     for (const purchase of purchases) {
+    //         if (customerPurchases.has(purchase.productId)) {
+    //                 customerPurchases.get(purchase.productId).total++
                     
-            } else {
-                    customerPurchases.set(purchase.productId, {total: 1, price: purchase.product.price, name: purchase.product.name})
-            }
-        }
-        return customerPurchases
-    }
+    //         } else {
+    //                 customerPurchases.set(purchase.productId, {total: 1, price: purchase.product.price, name: purchase.product.name})
+    //         }
+    //     }
+    //     return customerPurchases
+    // }
 
-    useEffect(() => {
-        const purchaseList = createLineItem()
-        setPurchases(purchaseList)
-    }, [purchases] )
+
+    useEffect(
+        () => {
+
+            const purchasesa = purchases.reduce(
+                (previous, current) => {
+                  
+                  if (previous.has(current.productId)) {
+                      previous.get(current.productId).total++
+                      
+                      
+                    } 
+                    else {
+                      previous.set(current.productId, 
+                        {   
+                            total: 1, 
+                            price: current.product.price, 
+                            name: current.product.name,
+                            
+                        })
+                  }
+        
+                  return previous
+                }
+                , new Map()
+              )
+
+              setPurchases(purchasesa)
+
+        },
+        [purchases])
+    
+
+
+
+    // useEffect(() => {
+    //     const purchaseList = createLineItem()
+    //     setPurchases(purchaseList)
+    // }, [purchases] )
 
 
 
@@ -53,7 +89,8 @@ export const OrderList = () => {
                 Array.from(totalPurchases).map(
                     
                     ([key, value]) => {
-                        return <p key={`purchase--${key}`}>{value.name} {value.price} {value.total} </p>
+                       
+                        return <p key={`purchase--${value.total}`}>{value.name} {value.name} {value.total} </p>
                     }
                 )
             }
